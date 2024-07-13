@@ -1,0 +1,11 @@
+{
+  "name": "full-stack-open-part4",
+  "version": "1.0.0",
+  "description": "Blog List Application (FSO-part4)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Ger Tecj",
+  "license": "ISC"
+}
