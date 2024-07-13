@@ -1,7 +1,9 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
-const mongoose = require('mongoose')
+const config = require('./utils/config');
+
+const express = require('express');
+const app = express();
+const cors = require('cors');
+const mongoose = require('mongoose');
 
 const blogSchema = new mongoose.Schema({
   title: String,
@@ -12,11 +14,12 @@ const blogSchema = new mongoose.Schema({
 
 const Blog = mongoose.model('Blog', blogSchema)
 
-const mongoUrl = 'mongodb://localhost/bloglist'
-mongoose.connect(mongoUrl)
+const mongoUrl = config.MONGODB_URL;
 
-app.use(cors())
-app.use(express.json())
+mongoose.connect(mongoUrl);
+
+app.use(cors());
+app.use(express.json());
 
 app.get('/api/blogs', (request, response) => {
   Blog
@@ -24,7 +27,7 @@ app.get('/api/blogs', (request, response) => {
     .then(blogs => {
       response.json(blogs)
     })
-})
+});
 
 app.post('/api/blogs', (request, response) => {
   const blog = new Blog(request.body)
@@ -34,9 +37,9 @@ app.post('/api/blogs', (request, response) => {
     .then(result => {
       response.status(201).json(result)
     })
-})
+});
 
 const PORT = 3003
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`)
+  console.log(`Server running on port ${PORT}`);
 })

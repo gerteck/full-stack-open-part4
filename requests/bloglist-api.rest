@@ -1,0 +1,26 @@
+// Install VS-Code extension "REST Client" to run this file
+// Backend Server runs here, and fetches from MongoDB.
+
+###
+// Get Blog 1
+
+
+###
+// Get all Blogs
+GET http://localhost:3003/api/blogs
+
+###
+// Delete Blog with id 1
+
+
+###
+// Create a new Blog
+POST http://localhost:3003/api/blogs
+content-type: application/json
+
+{
+        "title": "New Blog!",
+        "author": "Ger Teck",
+        "url": "https://gerteck.github.io",
+        "likes": 999
+}
