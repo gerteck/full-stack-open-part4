@@ -14,19 +14,18 @@ logger.info('connecting to', config.MONGODB_URL);
 // Connect to MongoDB
 const mongoUrl = config.MONGODB_URL;
 mongoose.connect(mongoUrl).then(() => {
-        logger.info('connected to MongoDB');
-    }).catch((error) => {
-        logger.error('error connecting to MongoDB:', error.message);
+    logger.info('connected to MongoDB');
+}).catch((error) => {
+    logger.error('error connecting to MongoDB:', error.message);
 });
 
+// Set up the Router Controller
 app.use(cors());
 app.use(express.json());
-
-// Set up the Router Controller
 app.use('/api/blogs', blogsRouter);
 
 // Set up Middleware
 app.use(middleware.unknownEndpoint);
-app.use(middleware.errorHandler);  
+app.use(middleware.errorHandler);
 
 module.exports = app;
