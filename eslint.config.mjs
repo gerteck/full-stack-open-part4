@@ -23,10 +23,6 @@ export default [
         'error',
         4
       ],
-      '@stylistic/js/quotes': [
-        'error',
-        'single'
-      ],
       'eqeqeq': 'error',
       'no-trailing-spaces': 'error',
       'object-curly-spacing': [
