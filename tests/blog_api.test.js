@@ -91,7 +91,7 @@ describe('Test Blog APIs', () => {
         assert.strictEqual(response.body.likes, 0);
     });
 
-    test.only('A blog without title and url properties returns 400', async () => {
+    test('A blog without title and url properties returns 400', async () => {
         const newBlog = {
             "author": "Ger Teck",
             "likes": 999
@@ -101,11 +101,41 @@ describe('Test Blog APIs', () => {
             .send(newBlog)
             .expect(400);
     });
+
+    test('A blog can be deleted', async () => {
+        const blogs = await api.get('/api/blogs');
+        const blogToDelete = blogs.body[0];
+
+        await api
+            .delete(`/api/blogs/${blogToDelete.id}`)
+            .expect(204);
+
+        const newBlogs = await api.get('/api/blogs');
+        const newTotalBlogs = newBlogs.body.length;
+        assert.strictEqual(newTotalBlogs, 1);
+    });
+
+    test('A blog can be updated', async () => {
+        const blogs = await api.get('/api/blogs');
+        const blogToUpdate = blogs.body[0];
+        const updatedBlog = { ...blogToUpdate, likes: 1000 };
+
+        await api
+            .put(`/api/blogs/${blogToUpdate.id}`)
+            .send(updatedBlog)
+            .expect(200);
+
+        const newBlogs = await api.get('/api/blogs');
+        const updatedBlogLikes = newBlogs.body[0].likes;
+        assert.strictEqual(updatedBlogLikes, 1000);
+    });
+
 });
 
 // test.only('Test this only', async () => {
 //     assert(true);
 // });
+
 
 
 after(async () => {
