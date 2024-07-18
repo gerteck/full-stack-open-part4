@@ -17,6 +17,7 @@ Cloud-based MongoDB database for phonebook application with MongoDB Atlas.
 
 #### Dependencies:
 * Express (Web framework for Node.js)
+  * express-async-errors (remove try catch)
   * morgan (node.js module, HTTP request logger middleware)
 * MongoDB (Mongoose)
 * Lodash 
