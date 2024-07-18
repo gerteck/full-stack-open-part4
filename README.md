@@ -18,9 +18,14 @@ Cloud-based MongoDB database for phonebook application with MongoDB Atlas.
 #### Dependencies:
 * Express (Web framework for Node.js)
   * morgan (node.js module, HTTP request logger middleware)
-* Nodemon (Auto restart node application)
 * MongoDB (Mongoose)
+* Lodash 
+
+##### Dev Dependencies
 * ESLint (dev dep)
+* Nodemon (Auto restart node application)
+* Super-test (library for testing nodejs http servers)
+
 
 Install dependencies: `npm install`
 
