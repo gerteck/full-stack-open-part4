@@ -14,6 +14,15 @@ blogsRouter.get('/', async (_request, response, next) => {
 blogsRouter.post('/', async (request, response, next) => {
     try {
         const blog = new Blog(request.body);
+
+        if (!blog.title && !blog.url) {
+            return response.status(400).json({ error: 'title and url missing' });
+        }
+
+        if (!blog.likes) {
+            blog.likes = 0;
+        }
+
         const result = await blog.save();
         response.status(201).json(result);
     } catch (error) {
