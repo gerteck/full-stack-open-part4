@@ -13,7 +13,7 @@ const api = supertest(app);
 
 console.log('\n\nUser_API Tests:');
 
-describe.only('when there is initially one user in db', () => {
+describe('when there is initially one user in db', () => {
     beforeEach(async () => {
         await User.deleteMany({});
 
@@ -23,7 +23,7 @@ describe.only('when there is initially one user in db', () => {
         await user.save();
     });
 
-    test.only('creation succeeds with a fresh username', async () => {
+    test('creation succeeds with a fresh username', async () => {
         const usersAtStart = await helper.usersInDb();
 
         const newUser = {
@@ -45,7 +45,7 @@ describe.only('when there is initially one user in db', () => {
         assert(usernames.includes(newUser.username));
     });
 
-    test.only('creation fails with proper statuscode and message if username already taken', async () => {
+    test('creation fails with proper statuscode and message if username already taken', async () => {
         const usersAtStart = await helper.usersInDb();
 
         const newUser = {
@@ -62,6 +62,27 @@ describe.only('when there is initially one user in db', () => {
 
         const usersAtEnd = await helper.usersInDb();
         assert(result.body.error.includes('expected `username` to be unique'));
+
+        assert.strictEqual(usersAtEnd.length, usersAtStart.length);
+    });
+
+    test('creation fails with proper statuscode and message if username is too short', async () => {
+        const usersAtStart = await helper.usersInDb();
+
+        const newUser = {
+            username: 'gt',
+            name: 'Superuser',
+            password: 'doesntmatter',
+        };
+
+        const result = await api
+            .post('/api/users')
+            .send(newUser)
+            .expect(400)
+            .expect('Content-Type', /application\/json/);
+
+        const usersAtEnd = await helper.usersInDb();
+        assert(result.body.error.includes('shorter than the minimum allowed length (3)'));
 
         assert.strictEqual(usersAtEnd.length, usersAtStart.length);
     });

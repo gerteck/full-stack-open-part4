@@ -23,14 +23,12 @@ content-type: application/json
 // Users
 GET http://localhost:3003/api/users
 
-
-
 ###
 POST http://localhost:3003/api/users
 content-type: application/json
 
 {
-        "username": "gerteck",
+        "username": "gerteckRequest",
         "name": "Ger Teck",
         "password": "password"
 }
