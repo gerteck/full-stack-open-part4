@@ -1,4 +1,6 @@
 const blogsRouter = require('./controllers/blogs');
+const usersRouter = require('./controllers/users');
+
 const cors = require('cors');
 const config = require('./utils/config');
 const express = require('express');
@@ -23,6 +25,7 @@ mongoose.connect(mongoUrl).then(() => {
 app.use(cors());
 app.use(express.json());
 app.use('/api/blogs', blogsRouter);
+app.use('/api/users', usersRouter);
 
 // Set up Middleware
 app.use(middleware.unknownEndpoint);

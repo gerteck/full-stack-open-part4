@@ -5,29 +5,17 @@ const supertest = require('supertest');
 const app = require('../app');
 const Blog = require('../models/blog');
 
+const helper = require('./test_helper');
+
 // wrap the app in a superagent object
 const api = supertest(app);
 
-const initialBlogs = [
-    {
-        "title": "New Test Blog 1",
-        "author": "Ger Teck",
-        "url": "https://gerteck.github.io",
-        "likes": 999
-    },
-    {
-        "title": "New Test Blog 2",
-        "author": "Ger Teck",
-        "url": "https://gerteck.github.io",
-        "likes": 999
-    }
-];
 
 beforeEach(async () => {
     await Blog.deleteMany({});
-    let blogObject = new Blog(initialBlogs[0]);
+    let blogObject = new Blog(helper.initialiBlogs[0]);
     await blogObject.save()
-    blogObject = new Blog(initialBlogs[1])
+    blogObject = new Blog(helper.initialiBlogs[1])
     await blogObject.save()
 });
 

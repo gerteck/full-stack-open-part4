@@ -1,17 +1,11 @@
 // Install VS-Code extension "REST Client" to run this file
 // Backend Server runs here, and fetches from MongoDB.
 
-###
-// Get Blog 1
-
+// To start the test server, run: npm run devtest
 
 ###
 // Get all Blogs
 GET http://localhost:3003/api/blogs
-
-###
-// Delete Blog with id 1
-
 
 ###
 // Create a new Blog
@@ -24,3 +18,21 @@ content-type: application/json
         "url": "https://gerteck.github.io",
         "likes": 999
 }
+
+### 
+// Users
+GET http://localhost:3003/api/users
+
+
+
+###
+POST http://localhost:3003/api/users
+content-type: application/json
+
+{
+        "username": "gerteck",
+        "name": "Ger Teck",
+        "password": "password"
+}
+
+
