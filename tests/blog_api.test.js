@@ -13,9 +13,9 @@ const api = supertest(app);
 
 beforeEach(async () => {
     await Blog.deleteMany({});
-    let blogObject = new Blog(helper.initialiBlogs[0]);
+    let blogObject = new Blog(helper.initialBlogs[0]);
     await blogObject.save()
-    blogObject = new Blog(helper.initialiBlogs[1])
+    blogObject = new Blog(helper.initialBlogs[1])
     await blogObject.save()
 });
 
