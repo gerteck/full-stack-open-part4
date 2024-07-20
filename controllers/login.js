@@ -14,6 +14,7 @@ loginRouter.post('/', async (request, response) => {
             ? false
             : await bcrypt.compare(password, user.passwordHash);
 
+    // login compares the password to the hash stored in the database
     if (!(user && passwordCorrect)) {
         // 401 Unauthorized
         return response.status(401).json({

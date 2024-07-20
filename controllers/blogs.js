@@ -1,9 +1,7 @@
 // This file contains the controller functions for the blogs routes.
 const blogsRouter = require('express').Router();
 const Blog = require('../models/blog');
-const User = require('../models/user');
-const jwt = require('jsonwebtoken');
-const config = require('../utils/config');
+const middleware = require('../utils/middleware');
 require('express-async-errors');
 
 blogsRouter.get('/', async (_request, response, _next) => {
@@ -13,24 +11,18 @@ blogsRouter.get('/', async (_request, response, _next) => {
     response.json(blogs);
 });
 
-blogsRouter.post('/', async (request, response, _next) => {
+blogsRouter.post('/', middleware.userExtractor, async (request, response, _next) => {
     const body = request.body;
 
-    // Decodes token, returns Object token was based on
-    // Token Object only has id field and username
-    const decodedToken = jwt.verify(request.token, config.TOKEN_SECRET);
-    if (!decodedToken.id) {
-        return response.status(401).json({ error: 'token invalid' });
-    }
-    const user = await User.findById(decodedToken.id);
-
+    // Token handled by middleware
+    const user = request.user;
 
     const blog = new Blog({
         title: body.title,
         author: user.name,
         url: body.url,
         likes: body.likes,
-        user: user._id,
+        user: user.id,
     });
 
 
@@ -48,19 +40,36 @@ blogsRouter.post('/', async (request, response, _next) => {
     response.status(201).json(savedBlog);
 });
 
-blogsRouter.delete('/:id', async (request, response, _next) => {
+blogsRouter.delete('/:id', middleware.userExtractor, async (request, response, _next) => {
+
+    const user = request.user;
+    const blog = await Blog.findById(request.params.id);
+
+    if (blog.user.toString() !== user.id.toString()) {
+        return response.status(401).json({ error: 'unauthorized' });
+    }
+
     await Blog.findByIdAndDelete(request.params.id);
+    user.blog = user.blogs.filter((blog) => blog.id.toString() !== request.params.id.toString());
+    await user.save();
+
     response.status(204).end();
 });
 
-blogsRouter.put('/:id', async (request, response, _next) => {
+blogsRouter.put('/:id', middleware.userExtractor, async (request, response, _next) => {
     const body = request.body;
+    const user = request.user;
+
+    const blog = await Blog.findById(request.params.id);
+    if (blog.user.toString() !== user.id.toString()) {
+        return response.status(401).json({ error: 'unauthorized' });
+    }
 
     const updatedBlog = {
-        title: body.title,
-        likes: body.likes,
-        author: body.author,
-        url: body.url,
+        title: body.title || blog.title,
+        likes: body.likes || blog.likes,
+        author: body.author || blog.author,
+        url: body.url || blog.url,
     };
 
     // { new: true } returns the modified document rather than the original

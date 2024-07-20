@@ -2,25 +2,28 @@ const { test, describe, after, beforeEach } = require('node:test');
 const assert = require('node:assert');
 const mongoose = require('mongoose');
 const supertest = require('supertest');
-const bcrypt = require('bcrypt');
-
 const app = require('../app');
 const helper = require('./test_helper');
 const User = require('../models/user');
 
-
 const api = supertest(app);
 
-console.log('\n\nUser_API Tests:');
+console.log('\nUser_API Tests:');
+
+let _globalTestUser;
 
 describe('when there is initially one user in db', () => {
     beforeEach(async () => {
         await User.deleteMany({});
 
-        const passwordHash = await bcrypt.hash('sekret', 10);
-        const user = new User({ username: 'root', passwordHash });
+        const testUser = {
+            username: 'testUserRouterUser',
+            name: 'Test User',
+            password: 'sekret',
+        };
+        const response = await api.post('/api/users').send(testUser);
+        _globalTestUser = await User.findById(response.body.id);
 
-        await user.save();
     });
 
     test('creation succeeds with a fresh username', async () => {
@@ -49,8 +52,8 @@ describe('when there is initially one user in db', () => {
         const usersAtStart = await helper.usersInDb();
 
         const newUser = {
-            username: 'root',
-            name: 'Superuser',
+            username: 'testUserRouterUser',
+            name: 'doesntmatter',
             password: 'doesntmatter',
         };
 

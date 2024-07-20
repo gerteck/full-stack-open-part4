@@ -1,4 +1,8 @@
 const logger = require('./logger');
+const jwt = require('jsonwebtoken');
+const config = require('./config');
+
+const User = require('../models/user');
 
 const requestLogger = (request, _response, next) => {
     logger.info('Method:', request.method);
@@ -40,9 +44,29 @@ const tokenExtractor = (request, _response, next) => {
     next();
 }
 
+const userExtractor = async (request, response, next) => {
+    const token = request.token;
+
+    if (!token) {
+        response.status(401).json({ error: 'token missing' });
+    }
+
+    // TODO add if token not provided ? Probably in token Extract
+
+    if (token) {
+        const decodedToken = jwt.verify(token, config.TOKEN_SECRET);
+        const user = await User.findById(decodedToken.id);
+        // Need to return the User Mongoose Object
+        request.user = user;
+    }
+
+    next();
+}
+
 module.exports = {
     requestLogger,
     unknownEndpoint,
     errorHandler,
     tokenExtractor,
+    userExtractor,
 };
