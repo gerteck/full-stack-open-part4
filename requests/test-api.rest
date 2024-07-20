@@ -10,11 +10,11 @@ GET http://localhost:3003/api/blogs
 ###
 // Create a new Blog
 POST http://localhost:3003/api/blogs
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdlcnRlY2tSZXF1ZXN0IiwiaWQiOiI2NjliOTUxYWU1NDdlYjMwYWU4NzhiN2QiLCJpYXQiOjE3MjE0NzMxMzZ9.56aKfe1WK-LQeHvMEGO6B6CV_6yr0pryZh3KJD2cyrU
 content-type: application/json
 
 {
         "title": "New Test Blog 2",
-        "author": "Ger Teck",
         "url": "https://gerteck.github.io",
         "likes": 999
 }
@@ -30,6 +30,17 @@ content-type: application/json
 {
         "username": "gerteckRequest",
         "name": "Ger Teck",
+        "password": "password"
+}
+
+
+### 
+// For Login
+POST http://localhost:3003/api/login
+content-type: application/json
+
+{
+        "username": "gerteckRequest",
         "password": "password"
 }
 

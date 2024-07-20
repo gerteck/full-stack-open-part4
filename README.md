@@ -22,9 +22,9 @@ Cloud-based MongoDB database for phonebook application with MongoDB Atlas.
 * MongoDB (Mongoose)
 * Lodash 
 
-User Auth:
+User Auth & Token:
 * bcrypt (or bcryptjs)
-
+* jsonwebtoken
 
 ##### Dev Dependencies
 * ESLint (dev dep)

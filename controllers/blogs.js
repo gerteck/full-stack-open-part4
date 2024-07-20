@@ -2,6 +2,8 @@
 const blogsRouter = require('express').Router();
 const Blog = require('../models/blog');
 const User = require('../models/user');
+const jwt = require('jsonwebtoken');
+const config = require('../utils/config');
 require('express-async-errors');
 
 blogsRouter.get('/', async (_request, response, _next) => {
@@ -14,18 +16,21 @@ blogsRouter.get('/', async (_request, response, _next) => {
 blogsRouter.post('/', async (request, response, _next) => {
     const body = request.body;
 
-    // TODO fix this after
-    // Use first user first
-    const users = await User.find({});
-    const user = users[0];
-    const userId = user._id;
+    // Decodes token, returns Object token was based on
+    // Token Object only has id field and username
+    const decodedToken = jwt.verify(request.token, config.TOKEN_SECRET);
+    if (!decodedToken.id) {
+        return response.status(401).json({ error: 'token invalid' });
+    }
+    const user = await User.findById(decodedToken.id);
+
 
     const blog = new Blog({
         title: body.title,
-        author: body.author,
+        author: user.name,
         url: body.url,
         likes: body.likes,
-        user: userId,
+        user: user._id,
     });
 
 
