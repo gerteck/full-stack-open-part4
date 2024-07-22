@@ -56,14 +56,10 @@ blogsRouter.delete('/:id', middleware.userExtractor, async (request, response, _
     response.status(204).end();
 });
 
-blogsRouter.put('/:id', middleware.userExtractor, async (request, response, _next) => {
+blogsRouter.put('/:id', async (request, response, _next) => {
     const body = request.body;
-    const user = request.user;
 
     const blog = await Blog.findById(request.params.id);
-    if (blog.user.toString() !== user.id.toString()) {
-        return response.status(401).json({ error: 'unauthorized' });
-    }
 
     const updatedBlog = {
         title: body.title || blog.title,

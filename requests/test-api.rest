@@ -10,11 +10,11 @@ GET http://localhost:3003/api/blogs
 ###
 // Create a new Blog
 POST http://localhost:3003/api/blogs
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdlcnRlY2tSZXF1ZXN0IiwiaWQiOiI2NjliOTUxYWU1NDdlYjMwYWU4NzhiN2QiLCJpYXQiOjE3MjE0NzMxMzZ9.56aKfe1WK-LQeHvMEGO6B6CV_6yr0pryZh3KJD2cyrU
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdlcnRlY2tSZXF1ZXN0IiwiaWQiOiI2NjlkY2NkNGJhMGIyY2VkYTM5NjNkZjUiLCJpYXQiOjE3MjE2MTc2MjgsImV4cCI6MTcyMTYyNDgyOH0.L5lk_TlFPYr8z42Zedh9aIQ4Ympbz-xPGmNbK47KklQ
 content-type: application/json
 
 {
-        "title": "New Test Blog 2",
+        "title": "New Test Blog 4",
         "url": "https://gerteck.github.io",
         "likes": 999
 }
