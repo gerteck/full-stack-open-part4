@@ -10,13 +10,13 @@ GET http://localhost:3003/api/blogs
 ###
 // Create a new Blog
 POST http://localhost:3003/api/blogs
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdlcnRlY2tSZXF1ZXN0IiwiaWQiOiI2NjlkY2NkNGJhMGIyY2VkYTM5NjNkZjUiLCJpYXQiOjE3MjE2MTc2MjgsImV4cCI6MTcyMTYyNDgyOH0.L5lk_TlFPYr8z42Zedh9aIQ4Ympbz-xPGmNbK47KklQ
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImdyZXkiLCJpZCI6IjY2OWRmODIwN2YyZTkyZGI4ZjRmYmE2ZCIsImlhdCI6MTcyMTYyODcxOSwiZXhwIjoxNzIxNjM1OTE5fQ.GRkzY0-hCSBuGe1wKU_kgR8g9Wg2STBOzgvP8mnY_WU
 content-type: application/json
 
 {
-        "title": "New Test Blog 4",
+        "title": "Grey's pants",
         "url": "https://gerteck.github.io",
-        "likes": 999
+        "likes": 2
 }
 
 ### 
@@ -33,6 +33,16 @@ content-type: application/json
         "password": "password"
 }
 
+###
+POST http://localhost:3003/api/users
+content-type: application/json
+
+{
+        "username": "grey",
+        "name": "sir-grey",
+        "password": "password"
+}
+
 
 ### 
 // For Login
@@ -40,7 +50,7 @@ POST http://localhost:3003/api/login
 content-type: application/json
 
 {
-        "username": "gerteckRequest",
+        "username": "grey",
         "password": "password"
 }
 

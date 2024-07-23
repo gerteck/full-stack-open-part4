@@ -148,7 +148,7 @@ describe.only('Test Blog APIs', () => {
         assert.strictEqual(updatedBlogLikes, 1000);
     });
 
-    test.only('A blog cannot be deleted without token', async () => {
+    test('A blog cannot be deleted without token', async () => {
         const blogs = await api.get('/api/blogs');
         const blogToDelete = blogs.body[0];
 

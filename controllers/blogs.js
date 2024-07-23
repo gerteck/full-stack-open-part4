@@ -43,6 +43,10 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response, _next)
 blogsRouter.delete('/:id', middleware.userExtractor, async (request, response, _next) => {
 
     const user = request.user;
+    if (!user) {
+        return;
+    }
+
     const blog = await Blog.findById(request.params.id);
 
     if (blog.user.toString() !== user.id.toString()) {
